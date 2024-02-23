@@ -5,6 +5,7 @@ plugins {
     alias(libs.plugins.kotlinCocoapods)
     alias(libs.plugins.androidLibrary)
     alias(libs.plugins.jetbrainsCompose)
+    alias(libs.plugins.kotlinx.serialization)
 }
 
 kotlin {
@@ -43,6 +44,8 @@ kotlin {
             implementation(libs.bundles.ktor)
             implementation(libs.koin.core)
             implementation(libs.koin.compose)
+            implementation(libs.kotlinx.serialization.json)
+            implementation(libs.kotlinx.coroutines.core)
         }
 
         androidMain.dependencies {
