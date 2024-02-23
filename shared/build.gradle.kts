@@ -41,6 +41,8 @@ kotlin {
             implementation(compose.components.resources)
 
             implementation(libs.bundles.ktor)
+            implementation(libs.koin.core)
+            implementation(libs.koin.compose)
         }
 
         androidMain.dependencies {
@@ -49,6 +51,7 @@ kotlin {
             implementation(libs.kotlinx.coroutines.android)
 
             implementation(libs.ktor.client.android)
+            implementation(libs.koin.android)
         }
 
         iosMain.dependencies {
