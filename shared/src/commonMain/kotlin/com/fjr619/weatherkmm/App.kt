@@ -47,7 +47,7 @@ fun App(
                 Button(
                     shape = RectangleShape,
                     onClick = {
-                    greetingText = "Heelo1, ${getPlatform().name}"
+                    greetingText = "Heelo2, ${getPlatform().name}"
                     showImage = !showImage
                 }) {
                     Text(greetingText, style = MaterialTheme.typography.labelSmall)
