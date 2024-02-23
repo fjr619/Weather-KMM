@@ -40,8 +40,8 @@ fun App(
         Surface(
             modifier = Modifier.fillMaxSize()
         ) {
-            val aaa1 = stringResource(MR.strings.add)
-            var greetingText by remember { mutableStateOf("$aaa1, World!") }
+            val aa = stringResource(MR.strings.add)
+            var greetingText by remember { mutableStateOf("$aa, World!") }
             var showImage by remember { mutableStateOf(false) }
             Column(Modifier.fillMaxWidth(), horizontalAlignment = Alignment.CenterHorizontally) {
                 Button(
