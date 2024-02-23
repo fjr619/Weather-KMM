@@ -7,7 +7,9 @@ plugins {
     alias(libs.plugins.jetbrainsCompose)
     alias(libs.plugins.kotlinx.serialization)
     alias(libs.plugins.sqlDelight)
+    alias(libs.plugins.moko.resources)
 }
+
 
 kotlin {
     androidTarget {
@@ -31,6 +33,7 @@ kotlin {
             baseName = "shared"
             isStatic = true
         }
+//        extraSpecAttributes["resources"] = "['src/commonMain/resources/**']"
     }
     
     sourceSets {
@@ -49,6 +52,9 @@ kotlin {
             implementation(libs.kotlinx.coroutines.core)
             implementation(libs.bundles.datastore)
             implementation(libs.bundles.sqlDelight)
+            implementation(libs.moko.mvvm.flow.compose)
+            implementation(libs.moko.permissions.compose)
+            implementation(libs.moko.resources.compose)
         }
 
         androidMain.dependencies {
@@ -70,7 +76,27 @@ kotlin {
             implementation(libs.kotlin.test)
         }
 
+        val iosX64Main by getting {
+            resources.srcDirs("build/generated/moko/iosX64Main/src")
+        }
+        val iosArm64Main by getting {
+            resources.srcDirs("build/generated/moko/iosArm64Main/src")
+        }
+        val iosSimulatorArm64Main by getting {
+            resources.srcDirs("build/generated/moko/iosSimulatorArm64Main/src")
+        }
+    }
+}
 
+multiplatformResources {
+    multiplatformResourcesPackage = "com.fjr619.weatherkmm"
+}
+
+sqldelight {
+    databases {
+        create("WeatherDatabase") {
+            packageName.set("com.fjr619.weatherkmm")
+        }
     }
 }
 
@@ -78,7 +104,7 @@ android {
     namespace = "com.fjr619.weatherkmm"
     compileSdk = 34
 
-    sourceSets["main"].manifest.srcFile("src/androidMain/AndroidManifest.xml")
+    sourceSets["main"].java.srcDirs("build/generated/moko/androidMain/src")
     sourceSets["main"].res.srcDirs("src/androidMain/res")
     sourceSets["main"].resources.srcDirs("src/commonMain/resources")
 
