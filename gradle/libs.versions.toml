@@ -7,6 +7,7 @@ compose-material3 = "1.2.0"
 androidx-activityCompose = "1.8.2"
 compose-plugin = "1.5.12"
 coroutines = "1.8.0"
+ktor = "2.3.7"
 
 [libraries]
 kotlin-test = { module = "org.jetbrains.kotlin:kotlin-test", version.ref = "kotlin" }
@@ -19,6 +20,20 @@ compose-material3 = { module = "androidx.compose.material3:material3", version.r
 
 kotlinx-coroutines-android = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-android", version.ref = "coroutines" }
 
+ktor-client-android = { module = "io.ktor:ktor-client-android", version.ref = "ktor" }
+ktor-client-content-negotiation = { module = "io.ktor:ktor-client-content-negotiation", version.ref = "ktor" }
+ktor-client-core = { module = "io.ktor:ktor-client-core", version.ref = "ktor" }
+ktor-client-darwin = { module = "io.ktor:ktor-client-darwin", version.ref = "ktor" }
+ktor-client-resources = { module = "io.ktor:ktor-client-resources", version.ref = "ktor" }
+ktor-serialization-kotlinx-json = { module = "io.ktor:ktor-serialization-kotlinx-json", version.ref = "ktor" }
+
+[bundles]
+ktor = [
+    "ktor-client-core",
+    "ktor-client-resources",
+    "ktor-client-content-negotiation",
+    "ktor-serialization-kotlinx-json"
+]
 
 [plugins]
 androidApplication = { id = "com.android.application", version.ref = "agp" }

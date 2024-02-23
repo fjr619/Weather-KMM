@@ -39,16 +39,20 @@ kotlin {
             implementation(compose.ui)
             @OptIn(ExperimentalComposeLibrary::class)
             implementation(compose.components.resources)
+
+            implementation(libs.bundles.ktor)
         }
 
         androidMain.dependencies {
             implementation(libs.compose.ui.tooling.preview)
             implementation(libs.androidx.activity.compose)
             implementation(libs.kotlinx.coroutines.android)
+
+            implementation(libs.ktor.client.android)
         }
 
         iosMain.dependencies {
-            
+            implementation(libs.ktor.client.darwin)
         }
 
         commonTest.dependencies {
