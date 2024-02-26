@@ -1,5 +1,6 @@
 package com.fjr619.weatherkmm.data.model.dto
 
+import com.fjr619.weatherkmm.domain.model.SearchResult
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 
@@ -12,4 +13,13 @@ data class SearchResultDto(
     @SerialName("lat") val latitude: Double,
     @SerialName("lon") val longitude: Double,
     @SerialName("url") val url: String,
+)
+
+internal fun SearchResultDto.toDomain() = SearchResult(
+    id = id,
+    name = name,
+    region = region,
+    country = country,
+    latitude = latitude,
+    longitude = longitude,
 )

@@ -44,18 +44,6 @@ fun createHttpClient(httpClientEngine: HttpClientEngine) = HttpClient(httpClient
     }
 }
 
-const val apiversion = "v1"
-
-enum class AirQuality(val value: String) {
-    YES("yes"),
-    NO("no"),
-}
-
-enum class WeatherAlerts(val value: String) {
-    YES("yes"),
-    NO("no"),
-}
-
 enum class RemoteExceptionType {
     SERVER_ERROR,
     CLIENT_ERROR,

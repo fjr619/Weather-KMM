@@ -1,5 +1,7 @@
 package com.fjr619.weatherkmm.data.model.dto
 
+import com.fjr619.weatherkmm.domain.model.TimeOfDayEnum
+import com.fjr619.weatherkmm.domain.model.Weather
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 
@@ -29,4 +31,31 @@ data class WeatherDto(
     @SerialName("gust_mph") val windGustMph: Double,
     @SerialName("gust_kph") val windGustKph: Double,
     @SerialName("air_quality") val airQuality: AirQualityDto? = null,
+)
+
+internal fun WeatherDto.toDomain() = Weather(
+    lastUpdatedDateEpoch = lastUpdatedDateEpoch,
+    lastUpdatedDate = lastUpdatedDate,
+    temperatureCelsius = temperatureCelsius,
+    temperatureFahrenheit = temperatureFahrenheit,
+    isDay = if (isDay == 1) TimeOfDayEnum.Day else TimeOfDayEnum.Night,
+    weatherCondition = weatherCondition.toDomain(),
+    windSpeedMph = windSpeedMph,
+    windSpeedKph = windSpeedKph,
+    windDirectionDegrees = windDirectionDegrees,
+    windDirection = windDirection,
+    pressureMillibars = pressureMillibars,
+    pressureInches = pressureInches,
+    precipitationAmountMillimeters = precipitationAmountMillimeters,
+    precipitationAmountInches = precipitationAmountInches,
+    humidityPercentage = humidityPercentage,
+    cloudCoverPercentage = cloudCoverPercentage,
+    feelsLikeTemperatureCelsius = feelsLikeTemperatureCelsius,
+    feelsLikeTemperatureFahrenheit = feelsLikeTemperatureFahrenheit,
+    visibilityKm = visibilityKm,
+    visibilityMiles = visibilityMiles,
+    uvIndex = uvIndex,
+    windGustMph = windGustMph,
+    windGustKph = windGustKph,
+    airQuality = airQuality?.toDomain(),
 )

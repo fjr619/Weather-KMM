@@ -1,5 +1,6 @@
 package com.fjr619.weatherkmm.data.model.dto
 
+import com.fjr619.weatherkmm.domain.model.ForecastDay
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 
@@ -10,4 +11,12 @@ data class ForecastDayDto(
     @SerialName("day") val day: DayDto,
     @SerialName("astro") val astronomy: AstronomyDto,
     @SerialName("hour") val hours: List<HourDto>,
+)
+
+internal fun ForecastDayDto.toDomain() = ForecastDay(
+    date = date,
+    dateEpoch = dateEpoch,
+    day = day.toDomain(),
+    astronomy = astronomy.toDomain(),
+    hours = hours.map { it.toDomain() },
 )
