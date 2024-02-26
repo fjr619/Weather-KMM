@@ -1,5 +1,6 @@
 package com.fjr619.weatherkmm.data.model.dto
 
+import com.fjr619.weatherkmm.domain.model.Hour
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 
@@ -39,4 +40,41 @@ data class HourDto(
     @SerialName("gust_kph") val windGustKph: Double,
     @SerialName("uv") val uvIndex: Double,
     @SerialName("air_quality") val airQuality: AirQualityDto? = null,
+)
+
+internal fun HourDto.toDomain() = Hour(
+    timeEpoch = timeEpoch,
+    time = time,
+    temperatureInCelsius = temperatureInCelsius,
+    temperatureInFahrenheit = temperatureInFahrenheit,
+    isDay = isDay,
+    condition = condition.toDomain(),
+    windSpeedMph = windSpeedMph,
+    windSpeedKph = windSpeedKph,
+    windDirectionDegrees = windDirectionDegrees,
+    windDirection = windDirection,
+    pressureMb = pressureMb,
+    pressureInches = pressureInches,
+    precipitationMm = precipitationMm,
+    precipitationInches = precipitationInches,
+    humidity = humidity,
+    cloudCoverage = cloudCoverage,
+    feelsLikeTemperatureInCelsius = feelsLikeTemperatureInCelsius,
+    feelsLikeTemperatureInFahrenheit = feelsLikeTemperatureInFahrenheit,
+    windchillTemperatureInCelsius = windchillTemperatureInCelsius,
+    windchillTemperatureInFahrenheit = windchillTemperatureInFahrenheit,
+    heatIndexCelsius = heatIndexCelsius,
+    heatIndexFahrenheit = heatIndexFahrenheit,
+    dewPointCelsius = dewPointCelsius,
+    dewPointFahrenheit = dewPointFahrenheit,
+    willItRain = willItRain,
+    chanceOfSnow = chanceOfSnow,
+    willItSnow =  willItSnow,
+    visibilityKm = visibilityKm,
+    visibilityMiles = visibilityMiles,
+    windGustKph = windGustKph,
+    windGustMph = windGustMph,
+    uvIndex = uvIndex,
+    airQuality = airQuality?.toDomain(),
+    chanceOfRain = chanceOfRain,
 )

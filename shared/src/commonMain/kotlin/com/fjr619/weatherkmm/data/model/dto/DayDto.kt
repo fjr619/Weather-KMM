@@ -1,5 +1,6 @@
 package com.fjr619.weatherkmm.data.model.dto
 
+import com.fjr619.weatherkmm.domain.model.Day
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 
@@ -26,4 +27,28 @@ data class DayDto(
     @SerialName("condition") val condition: ConditionDto,
     @SerialName("uv") val uvIndex: Double,
     @SerialName("air_quality") val airQuality: AirQualityDto? = null,
+)
+
+internal fun DayDto.toDomain() = Day(
+    maxTemperatureInCelsius = maxTemperatureInCelsius,
+    maxTemperatureInFahrenheit = maxTemperatureInFahrenheit,
+    minTemperatureInCelsius = minTemperatureInCelsius,
+    minTemperatureInFahrenheit = minTemperatureInFahrenheit,
+    averageTemperatureInCelsius = averageTemperatureInCelsius,
+    averageTemperatureInFahrenheit = averageTemperatureInFahrenheit,
+    maxWindSpeedMph = maxWindSpeedMph,
+    maxWindSpeedKph = maxWindSpeedKph,
+    totalPrecipitationMm = totalPrecipitationMm,
+    totalPrecipitationInches = totalPrecipitationInches,
+    totalSnowCm = totalSnowCm,
+    visibilityKm = visibilityKm,
+    visibilityMiles = visibilityMiles,
+    humidity = humidity,
+    willItRain = willItRain,
+    chanceOfRain = chanceOfRain,
+    willItSnow = willItSnow,
+    chanceOfSnow = chanceOfSnow,
+    condition = condition.toDomain(),
+    uvIndex = uvIndex,
+    airQuality = airQuality?.toDomain(),
 )

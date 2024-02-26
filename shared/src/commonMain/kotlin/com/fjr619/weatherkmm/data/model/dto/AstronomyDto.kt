@@ -1,5 +1,6 @@
 package com.fjr619.weatherkmm.data.model.dto
 
+import com.fjr619.weatherkmm.domain.model.Astronomy
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 
@@ -13,4 +14,15 @@ data class AstronomyDto(
     @SerialName("moon_illumination") val moonIllumination: String,
     @SerialName("is_moon_up") val isMoonUp: Int,
     @SerialName("is_sun_up") val isSunUp: Int,
+)
+
+internal fun AstronomyDto.toDomain() = Astronomy(
+    sunriseTime = sunriseTime,
+    sunsetTime = sunsetTime,
+    moonriseTime = moonriseTime,
+    moonsetTime = moonsetTime,
+    moonPhase = moonPhase,
+    moonIllumination = moonIllumination,
+    isMoonUp = isMoonUp,
+    isSunUp = isSunUp,
 )
