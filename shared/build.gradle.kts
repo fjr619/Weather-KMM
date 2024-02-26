@@ -45,6 +45,7 @@ kotlin {
             @OptIn(ExperimentalComposeLibrary::class)
             implementation(compose.components.resources)
 
+            implementation(libs.kotlinx.datetime)
             implementation(libs.bundles.ktor)
             implementation(libs.koin.core)
             implementation(libs.koin.compose)
@@ -63,7 +64,7 @@ kotlin {
             implementation(libs.kotlinx.coroutines.android)
 
             implementation(libs.ktor.client.android)
-            implementation(libs.koin.android)
+            api(libs.koin.android)
             implementation(libs.sqlDelight.android)
         }
 
