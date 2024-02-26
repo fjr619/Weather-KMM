@@ -45,6 +45,7 @@ kotlin {
             @OptIn(ExperimentalComposeLibrary::class)
             implementation(compose.components.resources)
 
+            implementation(libs.kotlinx.datetime)
             implementation(libs.bundles.ktor)
             implementation(libs.koin.core)
             implementation(libs.koin.compose)
