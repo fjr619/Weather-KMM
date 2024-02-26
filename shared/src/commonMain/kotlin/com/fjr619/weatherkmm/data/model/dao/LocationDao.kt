@@ -1,4 +1,4 @@
-package com.fjr619.weatherkmm.data.model
+package com.fjr619.weatherkmm.data.model.dao
 
 data class LocationDao(
     val id: Long,
