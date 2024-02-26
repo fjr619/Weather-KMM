@@ -63,7 +63,7 @@ kotlin {
             implementation(libs.kotlinx.coroutines.android)
 
             implementation(libs.ktor.client.android)
-            implementation(libs.koin.android)
+            api(libs.koin.android)
             implementation(libs.sqlDelight.android)
         }
 
