@@ -15,10 +15,11 @@ kotlin {
     androidTarget {
         compilations.all {
             kotlinOptions {
-                jvmTarget = "1.8"
+                jvmTarget = "17"
             }
         }
     }
+
     iosX64()
     iosArm64()
     iosSimulatorArm64()
@@ -53,6 +54,7 @@ kotlin {
             implementation(libs.kotlinx.coroutines.core)
             implementation(libs.bundles.datastore)
             implementation(libs.bundles.sqlDelight)
+            implementation(libs.moko.mvvm.compose)
             implementation(libs.moko.mvvm.flow.compose)
             implementation(libs.moko.permissions.compose)
             implementation(libs.moko.resources.compose)
@@ -113,14 +115,14 @@ android {
         minSdk = 24
     }
 
-//    compileOptions {
-//        sourceCompatibility = JavaVersion.VERSION_17
-//        targetCompatibility = JavaVersion.VERSION_17
-//    }
-//
-//    kotlin {
-//        jvmToolchain(17)
-//    }
+    compileOptions {
+        sourceCompatibility = JavaVersion.VERSION_17
+        targetCompatibility = JavaVersion.VERSION_17
+    }
+
+    kotlin {
+        jvmToolchain(17)
+    }
 
     dependencies {
         debugImplementation(libs.compose.ui.tooling)

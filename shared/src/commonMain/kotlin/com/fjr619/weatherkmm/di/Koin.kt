@@ -14,3 +14,4 @@ fun initKoin(appDeclaration: KoinAppDeclaration = {}) = startKoin {
 
 //called by iOS etc
 fun initKoin() = initKoin { }
+

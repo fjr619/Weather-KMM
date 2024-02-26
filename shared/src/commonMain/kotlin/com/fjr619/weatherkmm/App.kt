@@ -22,6 +22,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.RectangleShape
 import androidx.compose.ui.unit.dp
+import com.fjr619.weatherkmm.ui.screens.main.MainScreen
 import com.fjr619.weatherkmm.ui.theme.AppTheme
 import dev.icerock.moko.resources.compose.stringResource
 import org.jetbrains.compose.resources.ExperimentalResourceApi
@@ -40,25 +41,7 @@ fun App(
         Surface(
             modifier = Modifier.fillMaxSize()
         ) {
-            val a = stringResource(MR.strings.add)
-            var greetingText by remember { mutableStateOf("$a, World!") }
-            var showImage by remember { mutableStateOf(false) }
-            Column(Modifier.fillMaxWidth(), horizontalAlignment = Alignment.CenterHorizontally) {
-                Button(
-                    shape = RectangleShape,
-                    onClick = {
-                    greetingText = "Heelo, ${getPlatform().name}"
-                    showImage = !showImage
-                }) {
-                    Text(greetingText, style = MaterialTheme.typography.labelSmall)
-                }
-                AnimatedVisibility(showImage) {
-                    Image(
-                        painterResource("MR/images/compose-multiplatform.xml"),
-                        contentDescription = "Compose Multiplatform icon"
-                    )
-                }
-            }
+            MainScreen()
         }
 
     }
