@@ -59,6 +59,7 @@ kotlin {
             implementation(libs.moko.permissions.compose)
             implementation(libs.moko.resources.compose)
             implementation(libs.play.services.location)
+            implementation("media.kamel:kamel-image:0.9.3")
         }
 
         androidMain.dependencies {

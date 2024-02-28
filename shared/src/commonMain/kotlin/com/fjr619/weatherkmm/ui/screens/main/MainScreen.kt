@@ -34,8 +34,6 @@ import dev.icerock.moko.resources.compose.stringResource
 fun MainScreen(
     modifier: Modifier = Modifier
 ) {
-    val snackbarHostState = remember { SnackbarHostState() }
-
     val factory = rememberPermissionsControllerFactory()
     val viewModel: MainViewModel = getViewModel(
         key = "main-vm",
@@ -48,12 +46,9 @@ fun MainScreen(
     val state by viewModel.state.collectAsState()
 
     BindEffect(viewModel.permissionsController)
-
     Scaffold(
         modifier = modifier,
-        snackbarHost = {
-            SnackbarHost(snackbarHostState)
-        },
+        snackbarHost = {},
         topBar = {}
     ) { padding ->
         Surface(
