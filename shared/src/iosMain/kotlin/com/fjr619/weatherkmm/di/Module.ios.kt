@@ -5,6 +5,8 @@ import app.cash.sqldelight.driver.native.NativeSqliteDriver
 import com.fjr619.weatherkmm.WeatherDatabase
 import com.fjr619.weatherkmm.data.local.datastore.DataStoreProvider
 import com.fjr619.weatherkmm.data.local.DataStoreProviderImpl
+import com.fjr619.weatherkmm.domain.location.IosLocationService
+import com.fjr619.weatherkmm.domain.location.LocationService
 import io.ktor.client.engine.darwin.Darwin
 import org.koin.core.module.Module
 import org.koin.dsl.module
@@ -15,4 +17,5 @@ actual fun platformModule(): Module = module {
         NativeSqliteDriver(WeatherDatabase.Schema, "WeatherDatabase.db")
     }
     single { Darwin.create() }
+    single<LocationService> { IosLocationService() }
 }

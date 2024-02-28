@@ -1,11 +1,12 @@
 package com.fjr619.weatherkmm.ui.screens.main
 
+import com.fjr619.weatherkmm.domain.model.Forecast
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.update
 
 data class MainUiState(
     val query: String = "",
-//    val forecast: Forecast? = null,
+    val forecast: Forecast? = null,
     val isLoading: Boolean = false,
     val isError: Boolean = false,
 //    val locationToSave: String = "",
@@ -26,4 +27,18 @@ internal fun MutableStateFlow<MainUiState>.isError() {
 
 internal fun MutableStateFlow<MainUiState>.showEmptyMessage() {
     update { it.copy(isError = true, isLoading = false, showEmptyMessage = true) }
+}
+
+internal fun MutableStateFlow<MainUiState>.updateForecast(forecast: Forecast) {
+    update {
+        it.copy(
+            isLoading = false,
+            isError = false,
+            forecast = forecast,
+            showEmptyMessage = false,
+            query = with (forecast.location) {
+                "$name, $region, $country"
+            }
+        )
+    }
 }

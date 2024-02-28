@@ -5,6 +5,8 @@ import app.cash.sqldelight.driver.android.AndroidSqliteDriver
 import com.fjr619.weatherkmm.WeatherDatabase
 import com.fjr619.weatherkmm.data.local.datastore.DataStoreProvider
 import com.fjr619.weatherkmm.data.local.DataStoreProviderImpl
+import com.fjr619.weatherkmm.domain.location.AndroidLocationService
+import com.fjr619.weatherkmm.domain.location.LocationService
 import io.ktor.client.engine.android.Android
 import org.koin.android.ext.koin.androidContext
 import org.koin.core.module.Module
@@ -18,4 +20,5 @@ actual fun platformModule(): Module = module {
         schema = WeatherDatabase.Schema
     ) }
     single { Android.create() }
+    factory <LocationService> { AndroidLocationService(context = androidContext()) }
 }

@@ -17,7 +17,7 @@ sqlDelight = "2.0.1"
 moko-mvvm = "0.16.1"
 moko-permissions = "0.17.0"
 moko-resources = "0.23.0"
-
+play-services-location = "21.1.0"
 [libraries]
 kotlin-test = { module = "org.jetbrains.kotlin:kotlin-test", version.ref = "kotlin" }
 androidx-activity-compose = { module = "androidx.activity:activity-compose", version.ref = "androidx-activityCompose" }
@@ -38,6 +38,7 @@ ktor-client-core = { module = "io.ktor:ktor-client-core", version.ref = "ktor" }
 ktor-client-darwin = { module = "io.ktor:ktor-client-darwin", version.ref = "ktor" }
 ktor-client-resources = { module = "io.ktor:ktor-client-resources", version.ref = "ktor" }
 ktor-serialization-kotlinx-json = { module = "io.ktor:ktor-serialization-kotlinx-json", version.ref = "ktor" }
+ktor-client-logging = { module = "io.ktor:ktor-client-logging", version.ref = "ktor" }
 
 koin-core = { module = "io.insert-koin:koin-core", version.ref = "koin" }
 koin-android = { module = "io.insert-koin:koin-android", version.ref = "koin" }
@@ -61,12 +62,16 @@ moko-permissions-compose = { module = "dev.icerock.moko:permissions-compose", ve
 
 moko-resources-compose = { module = "dev.icerock.moko:resources-compose", version.ref = "moko-resources" }
 
+play-services-location = { module = "com.google.android.gms:play-services-location", version.ref = "play-services-location" }
+
+
 [bundles]
 ktor = [
     "ktor-client-core",
     "ktor-client-resources",
     "ktor-client-content-negotiation",
-    "ktor-serialization-kotlinx-json"
+    "ktor-serialization-kotlinx-json",
+    "ktor-client-logging"
 ]
 
 datastore = [

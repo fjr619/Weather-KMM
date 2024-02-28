@@ -58,6 +58,7 @@ kotlin {
             implementation(libs.moko.mvvm.flow.compose)
             implementation(libs.moko.permissions.compose)
             implementation(libs.moko.resources.compose)
+            implementation(libs.play.services.location)
         }
 
         androidMain.dependencies {

@@ -1,6 +1,12 @@
 package com.fjr619.weatherkmm.ui.screens.main
 
 import com.fjr619.weatherkmm.data.local.datastore.PreferencesDataSource
+import com.fjr619.weatherkmm.domain.location.DeviceLocation
+import com.fjr619.weatherkmm.domain.location.LocationService
+import com.fjr619.weatherkmm.domain.model.AirQualityEnum
+import com.fjr619.weatherkmm.domain.model.Response
+import com.fjr619.weatherkmm.domain.model.WeatherAlertsEnum
+import com.fjr619.weatherkmm.domain.repository.ForecastRepo
 import dev.icerock.moko.mvvm.viewmodel.ViewModel
 import dev.icerock.moko.permissions.DeniedAlwaysException
 import dev.icerock.moko.permissions.DeniedException
@@ -23,6 +29,9 @@ class MainViewModel(
 
     // ga boleh akses langsung ke data layer, harus pakai domain layer
     val dataStore: PreferencesDataSource = get()
+
+    private val locationService: LocationService = get()
+    private val forecastRepo: ForecastRepo = get()
 
     private val permissions = MutableStateFlow(PermissionsState())
     private val _state = MutableStateFlow(MainUiState())
@@ -60,7 +69,11 @@ class MainViewModel(
 
     fun onEvent(event: MainEvent) {
         when(event) {
+            is MainEvent.Loading -> _state.isLoading()
+            is MainEvent.Error -> _state.isError()
+            is MainEvent.ShowEmptyMessage -> { _state.showEmptyMessage() }
             is MainEvent.RequestLocationPermission -> requestPermission()
+            is MainEvent.LoadForecastWithLocation -> loadForecastWithLocation()
             else -> {}
         }
     }
@@ -79,6 +92,35 @@ class MainViewModel(
                     .also {
                         if (it == PermissionState.NotDetermined) requestPermission()
                     }
+            }
+        }
+    }
+
+    private fun loadForecastWithLocation() {
+        viewModelScope.launch {
+            val location: DeviceLocation = locationService.getCurrentLocation()
+            loadForecast(location.toString())
+        }
+    }
+
+    private fun loadForecast(query: String) {
+        if (query.isNotEmpty()) {
+            viewModelScope.launch {
+                onEvent(MainEvent.Loading)
+                forecastRepo.invoke(
+                    query = query,
+                    airQuality = AirQualityEnum.YES,
+                    days = 1,
+                    weatherAlerts = WeatherAlertsEnum.YES
+                ).collectLatest { result ->
+                    when(result) {
+                        is Response.Error -> {
+                            println("--- error request ${result.message}")
+                            onEvent(MainEvent.Error)
+                        }
+                        is Response.Success -> _state.updateForecast(result.data)
+                    }
+                }
             }
         }
     }
