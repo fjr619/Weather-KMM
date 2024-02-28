@@ -3,7 +3,7 @@ package com.fjr619.weatherkmm.data.remote.request
 import io.ktor.resources.Resource
 import kotlinx.serialization.SerialName
 
-@Resource("/forecast.json")
+@Resource("forecast.json")
 data class ForecastRequest(
     @SerialName("q") val query: String,
     @SerialName("aqi") val airQuality: String = "no",
