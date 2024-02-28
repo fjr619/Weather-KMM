@@ -6,7 +6,7 @@ data class Astronomy(
     val moonriseTime: String,
     val moonsetTime: String,
     val moonPhase: String,
-    val moonIllumination: String,
+    val moonIllumination: Int,
     val isMoonUp: Int,
     val isSunUp: Int,
 )

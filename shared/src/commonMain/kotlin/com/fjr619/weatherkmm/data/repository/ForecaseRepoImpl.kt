@@ -4,6 +4,7 @@ import com.fjr619.weatherkmm.data.model.dto.toDomain
 import com.fjr619.weatherkmm.data.remote.RemoteDataSource
 import com.fjr619.weatherkmm.domain.model.AirQualityEnum
 import com.fjr619.weatherkmm.domain.model.Forecast
+import com.fjr619.weatherkmm.domain.model.RequestException
 import com.fjr619.weatherkmm.domain.model.Response
 import com.fjr619.weatherkmm.domain.model.WeatherAlertsEnum
 import com.fjr619.weatherkmm.domain.repository.ForecastRepo
@@ -23,15 +24,17 @@ class ForecaseRepoImpl(
         weatherAlerts: WeatherAlertsEnum,
         days: Int
     ): Flow<Response<Forecast>> = flow {
-        val response = remoteDataSource.fetchForecast(
-            query = query,
-            airQuality = airQuality,
-            weatherAlerts = weatherAlerts,
-            days = days
-        )
+        try {
+            val response = remoteDataSource.fetchForecast(
+                query = query,
+                airQuality = airQuality,
+                weatherAlerts = weatherAlerts,
+                days = days
+            )
 
-        emit(Response.Success(response.toDomain()) as Response<Forecast>)
-    }.catch {
-        emit(Response.Error(it))
+            emit(Response.Success(response.toDomain()) as Response<Forecast>)
+        } catch (e: RequestException) {
+            emit(Response.Error(e.message))
+        }
     }.flowOn(Dispatchers.IO)
 }

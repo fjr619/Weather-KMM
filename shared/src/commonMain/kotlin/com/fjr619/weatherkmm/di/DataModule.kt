@@ -7,9 +7,11 @@ import com.fjr619.weatherkmm.data.local.db.LocalDataSource
 import com.fjr619.weatherkmm.data.local.db.LocalDataSourceImpl
 import com.fjr619.weatherkmm.data.remote.RemoteDataSource
 import com.fjr619.weatherkmm.data.remote.RemoteDataSourceImpl
+import com.fjr619.weatherkmm.data.remote.config.createHttpClient
 import org.koin.dsl.module
 
 val dataModule = module {
+    single { createHttpClient(get()) }
     single<PreferencesDataSource> { PreferencesDataSourceImpl(get()) }
     single<LocalDataSource> { LocalDataSourceImpl(
         database = WeatherDatabase(driver = get())

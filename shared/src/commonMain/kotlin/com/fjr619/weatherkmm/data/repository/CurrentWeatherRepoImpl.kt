@@ -4,6 +4,7 @@ import com.fjr619.weatherkmm.data.model.dto.toDomain
 import com.fjr619.weatherkmm.data.remote.RemoteDataSource
 import com.fjr619.weatherkmm.domain.model.AirQualityEnum
 import com.fjr619.weatherkmm.domain.model.CurrentWeather
+import com.fjr619.weatherkmm.domain.model.RequestException
 import com.fjr619.weatherkmm.domain.model.Response
 import com.fjr619.weatherkmm.domain.repository.CurrentWeatherRepo
 import kotlinx.coroutines.Dispatchers
@@ -21,12 +22,14 @@ class CurrentWeatherRepoImpl(
         query: String,
         airQualityEnum: AirQualityEnum
     ): Flow<Response<CurrentWeather>> = flow {
-        val response = remoteDataSource.fetchCurrentWeather(
-            query = query,
-            airQuality = airQualityEnum
-        )
-        emit(Response.Success(response.toDomain()) as Response<CurrentWeather>)
-    }.catch {
-        emit(Response.Error(it))
+        try {
+            val response = remoteDataSource.fetchCurrentWeather(
+                query = query,
+                airQuality = airQualityEnum
+            )
+            emit(Response.Success(response.toDomain()) as Response<CurrentWeather>)
+        } catch (e: RequestException) {
+            emit(Response.Error(e.message))
+        }
     }.flowOn(Dispatchers.IO)
 }
