@@ -45,7 +45,7 @@
     <string name="search_hint">Search places</string>
     <string name="sunrise">Sunrise</string>
     <string name="sunset">Sunset</string>
-    <string name="sunrise_sunset">Sunrise &amp; sunset</string>
+    <string name="sunrise_sunset">Sunrise &amp; Sunset</string>
     <string name="moonrise">Moonrise</string>
     <string name="moonset">Moonset</string>
     <string name="moonrise_moonset">Moonrise &amp; Moonset</string>

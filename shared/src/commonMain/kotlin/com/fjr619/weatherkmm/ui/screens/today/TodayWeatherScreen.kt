@@ -19,6 +19,7 @@ import com.fjr619.weatherkmm.ui.components.DividerItem
 import com.fjr619.weatherkmm.ui.components.HourlyRainItem
 import com.fjr619.weatherkmm.ui.components.HourlyWeatherItem
 import com.fjr619.weatherkmm.ui.components.PrecipitationChanceItem
+import com.fjr619.weatherkmm.ui.components.RiseAndSetItem
 import com.fjr619.weatherkmm.ui.components.TotalDailyRainVolume
 import com.fjr619.weatherkmm.ui.components.WindItem
 import com.fjr619.weatherkmm.ui.components.WindToday
@@ -137,7 +138,13 @@ fun TodayWeatherContent(
         }
 
         item {
-            //RiseAndSetItem
+            RiseAndSetItem(
+                setTime = state.sunset,
+                riseTime = state.sunrise,
+                riseTitle = stringResource(MR.strings.sunrise),
+                setTitle = stringResource(MR.strings.sunset),
+                sectionTitle = stringResource(MR.strings.sunrise_sunset),
+            )
         }
 
         item {
@@ -145,7 +152,13 @@ fun TodayWeatherContent(
         }
 
         item {
-            //RiseAndSetItem
+            RiseAndSetItem(
+                setTime = state.moonset,
+                riseTime = state.moonrise,
+                riseTitle = stringResource(MR.strings.moonrise),
+                setTitle = stringResource(MR.strings.moonset),
+                sectionTitle = stringResource(MR.strings.moonrise_moonset),
+            )
         }
 
         item {

@@ -36,6 +36,10 @@ data class TodayWeatherUiState(
     val windSpeed: Int = 0,
     val windDirectionDegrees: Int = 0,
     val windDirection: StringResource? = null,
+    val sunrise: String = "",
+    val sunset: String = "",
+    val moonrise: String = "",
+    val moonset: String = "",
 ) {
     val windSpeedColor: Color
         get() {
@@ -92,6 +96,10 @@ internal fun MutableStateFlow<TodayWeatherUiState>.setResponse(result: Forecast)
             windSpeed = allDaysHours.first().windSpeed,
             windDirectionDegrees = allDaysHours.first().windDirectionDegrees,
             windDirection = getWindDirection(allDaysHours.first().windDirection),
+            sunrise = result.forecastDays.first().astronomy.sunriseTime.lowercase(),
+            sunset = result.forecastDays.first().astronomy.sunsetTime.lowercase(),
+            moonrise = result.forecastDays.first().astronomy.moonriseTime.lowercase(),
+            moonset = result.forecastDays.first().astronomy.moonsetTime.lowercase(),
         )
     }
 }
