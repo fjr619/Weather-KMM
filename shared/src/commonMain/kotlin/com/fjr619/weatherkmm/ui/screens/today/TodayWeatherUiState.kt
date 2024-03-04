@@ -29,6 +29,7 @@ data class TodayWeatherUiState(
     val pressure: String = "",
     val uvIndex: String = "",
     val visibility: String = "",
+    val totalPrecipitation: String = "",
 )
 
 internal fun MutableStateFlow<TodayWeatherUiState>.setResponse(result: Forecast) {
@@ -59,6 +60,7 @@ internal fun MutableStateFlow<TodayWeatherUiState>.setResponse(result: Forecast)
             uvIndex = result.currentWeather.uvIndex.toInt()
                 .toString(), // TODO: Add moderate, high, low, etc.
             visibility = result.currentWeather.visibilityKm.toInt().toString(),
+            totalPrecipitation = result.forecastDays.first().day.totalPrecipitationMm.toString(),
         )
     }
 }

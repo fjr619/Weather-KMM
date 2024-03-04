@@ -16,8 +16,10 @@ import com.fjr619.weatherkmm.ui.components.CurrentDateItem
 import com.fjr619.weatherkmm.ui.components.CurrentDetailsItem
 import com.fjr619.weatherkmm.ui.components.CurrentWeatherItem
 import com.fjr619.weatherkmm.ui.components.DividerItem
+import com.fjr619.weatherkmm.ui.components.HourlyRainItem
 import com.fjr619.weatherkmm.ui.components.HourlyWeatherItem
 import com.fjr619.weatherkmm.ui.components.PrecipitationChanceItem
+import com.fjr619.weatherkmm.ui.components.TotalDailyRainVolume
 import com.fjr619.weatherkmm.ui.screens.main.MainEvent
 import com.fjr619.weatherkmm.ui.screens.main.MainUiState
 import dev.icerock.moko.mvvm.compose.getViewModel
@@ -97,6 +99,29 @@ fun TodayWeatherContent(
 
         item {
             CurrentDetailsItem(state)
+        }
+
+        item {
+            DividerItem()
+        }
+
+        item {
+            HourlyRainItem(
+                hourlyForecasts = state.hourlyForecasts,
+            )
+        }
+
+        item {
+            TotalDailyRainVolume(
+                totalPrecipitation = stringResource(
+                    MR.strings.total_precipitation_mm,
+                    state.totalPrecipitation,
+                ),
+            )
+        }
+
+        item {
+            DividerItem()
         }
     }
 }
