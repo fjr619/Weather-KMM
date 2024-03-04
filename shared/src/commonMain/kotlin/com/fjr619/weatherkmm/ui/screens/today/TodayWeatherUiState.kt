@@ -3,8 +3,6 @@ package com.fjr619.weatherkmm.ui.screens.today
 import androidx.compose.ui.text.capitalize
 import androidx.compose.ui.text.intl.Locale
 import com.fjr619.weatherkmm.domain.model.Forecast
-import com.fjr619.weatherkmm.ui.model.HourUi
-import dev.icerock.moko.resources.StringResource
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.update
 import kotlinx.datetime.Instant
@@ -39,11 +37,13 @@ internal fun MutableStateFlow<TodayWeatherUiState>.setResponse(result: Forecast)
     }
 }
 
-fun parseTime(localTimeEpoch: Long, timeZoneId: String) = Instant.fromEpochMilliseconds(localTimeEpoch).toLocalDateTime(
-    TimeZone.of(timeZoneId))
+fun parseTime(localTimeEpoch: Long, timeZoneId: String) =
+    Instant.fromEpochSeconds(localTimeEpoch).toLocalDateTime(TimeZone.of(timeZoneId))
 
 fun formatTime(currentTime: LocalDateTime): String {
-    return "${currentTime.dayOfMonth} ${currentTime.month.name.lowercase().capitalize(
-        Locale.current
-    )} ${currentTime.time.hour}:${currentTime.time.minute}"
+    return "${currentTime.dayOfMonth} ${
+        currentTime.month.name.lowercase().capitalize(
+            Locale.current
+        )
+    } ${currentTime.time.hour}:${currentTime.time.minute}"
 }

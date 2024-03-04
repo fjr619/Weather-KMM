@@ -2,14 +2,19 @@ package com.fjr619.weatherkmm.domain.location
 
 import android.annotation.SuppressLint
 import android.content.Context
+import com.google.android.gms.location.LocationCallback
+import com.google.android.gms.location.LocationRequest
+import com.google.android.gms.location.LocationResult
 import com.google.android.gms.location.LocationServices
+import com.google.android.gms.location.Priority
 import kotlin.coroutines.resume
 import kotlin.coroutines.resumeWithException
 import kotlin.coroutines.suspendCoroutine
 
+
 internal class AndroidLocationService(
     private val context: Context
-): LocationService {
+) : LocationService {
 
     private val fusedLocationClient by lazy {
         LocationServices.getFusedLocationProviderClient(context)
@@ -17,8 +22,23 @@ internal class AndroidLocationService(
 
     @SuppressLint("MissingPermission")
     override suspend fun getCurrentLocation(): DeviceLocation = suspendCoroutine { continuation ->
+
+        val request = LocationRequest.Builder(Priority.PRIORITY_HIGH_ACCURACY, 100)
+            .setWaitForAccurateLocation(false)
+            .setMinUpdateIntervalMillis(2000)
+            .setMaxUpdateDelayMillis(100)
+            .build()
+
+        val locationCallback: LocationCallback = object : LocationCallback() {
+            override fun onLocationResult(locationResult: LocationResult) {
+            }
+        }
+
+        fusedLocationClient.requestLocationUpdates(request, locationCallback, null)
+
         fusedLocationClient.lastLocation
             .addOnSuccessListener { location ->
+                println("-- getCurrentLocation")
                 if (location == null) return@addOnSuccessListener
                 continuation.resume(
                     DeviceLocation(
