@@ -3,7 +3,7 @@ package com.fjr619.weatherkmm.ui.screens.main
 sealed interface MainEvent {
     data class UpdateQuery(val query: String) : MainEvent
     object LoadForecast : MainEvent
-    object Loading : MainEvent
+    data class Loading(val isLoading: Boolean = true) : MainEvent
     object Error : MainEvent
     data class ShowSaveLocationSnackbar(val location: String) : MainEvent
     data class SaveLocation(val location: String): MainEvent

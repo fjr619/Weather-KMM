@@ -15,6 +15,8 @@ android {
         versionName = "1.0"
     }
 
+    sourceSets["main"].manifest.srcFile("src/main/AndroidManifest.xml")
+
     buildFeatures {
         compose = true
         buildConfig = true

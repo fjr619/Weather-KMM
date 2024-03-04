@@ -60,7 +60,9 @@ fun MainScreen(
                 if (state.showEmptyMessage) {
                     EmptyLocationMessage()
                 } else {
-                    TodayWeatherScreen(mainUiState = state)
+                    TodayWeatherScreen(mainUiState = state) {
+                        viewModel.onEvent(it)
+                    }
                 }
             }
         }

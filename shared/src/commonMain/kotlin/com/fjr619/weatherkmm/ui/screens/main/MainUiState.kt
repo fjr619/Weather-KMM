@@ -17,8 +17,8 @@ internal fun MutableStateFlow<MainUiState>.updateQuery(query: String) {
     update { it.copy(query = query) }
 }
 
-internal fun MutableStateFlow<MainUiState>.isLoading() {
-    update { it.copy(isLoading = true, showEmptyMessage = false, isError = false) }
+internal fun MutableStateFlow<MainUiState>.isLoading(isLoading: Boolean = true) {
+    update { it.copy(isLoading = isLoading, showEmptyMessage = false, isError = false) }
 }
 
 internal fun MutableStateFlow<MainUiState>.isError() {
@@ -32,7 +32,7 @@ internal fun MutableStateFlow<MainUiState>.showEmptyMessage() {
 internal fun MutableStateFlow<MainUiState>.updateForecast(forecast: Forecast) {
     update {
         it.copy(
-            isLoading = false,
+//            isLoading = false,
             isError = false,
             forecast = forecast,
             showEmptyMessage = false,

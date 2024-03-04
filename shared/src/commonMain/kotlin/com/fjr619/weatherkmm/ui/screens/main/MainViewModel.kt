@@ -69,7 +69,7 @@ class MainViewModel(
 
     fun onEvent(event: MainEvent) {
         when(event) {
-            is MainEvent.Loading -> _state.isLoading()
+            is MainEvent.Loading -> _state.isLoading(event.isLoading)
             is MainEvent.Error -> _state.isError()
             is MainEvent.ShowEmptyMessage -> { _state.showEmptyMessage() }
             is MainEvent.RequestLocationPermission -> requestPermission()
@@ -106,16 +106,17 @@ class MainViewModel(
     private fun loadForecast(query: String) {
         if (query.isNotEmpty()) {
             viewModelScope.launch {
-                onEvent(MainEvent.Loading)
+                onEvent(MainEvent.Loading())
                 forecastRepo.invoke(
                     query = query,
                     airQuality = AirQualityEnum.YES,
-                    days = 1,
+                    days = 3,
                     weatherAlerts = WeatherAlertsEnum.YES
                 ).collectLatest { result ->
                     when(result) {
                         is Response.Error -> {
                             println("--- error request ${result.message}")
+                            onEvent(MainEvent.Loading(false))
                             onEvent(MainEvent.Error)
                         }
                         is Response.Success -> _state.updateForecast(result.data)
