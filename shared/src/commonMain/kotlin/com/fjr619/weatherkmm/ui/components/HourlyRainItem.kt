@@ -1,5 +1,7 @@
 package com.fjr619.weatherkmm.ui.components
 
+import androidx.compose.animation.core.Animatable
+import androidx.compose.animation.core.tween
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -14,9 +16,10 @@ import androidx.compose.foundation.lazy.items
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import com.fjr619.weatherkmm.MR
@@ -91,6 +94,18 @@ fun HourlyRainForecast(
     hourlyForecast: HourUi,
     modifier: Modifier = Modifier,
 ) {
+
+    //autostart
+    val barHeightAnimation = remember {
+        Animatable(0f)
+    }
+    LaunchedEffect(Unit) {
+        barHeightAnimation.animateTo(
+            hourlyForecast.precipitationMmPercentage.toFloat(),
+            tween(1000)
+        )
+    }
+
     Column(
         modifier = modifier,
         verticalArrangement = Arrangement.spacedBy(12.dp),
@@ -100,6 +115,7 @@ fun HourlyRainForecast(
             text = stringResource(MR.strings.chance_rain_percentage, hourlyForecast.chanceOfRain),
             style = MaterialTheme.typography.labelMedium,
         )
+
         Box(
             modifier = Modifier
                 .height(32.dp)
@@ -108,9 +124,9 @@ fun HourlyRainForecast(
         ) {
             Box(
                 modifier = Modifier
-                    .height((32 * hourlyForecast.precipitationMmPercentage).dp)
+                    .height((32 * barHeightAnimation.value).dp)
                     .width(16.dp)
-                    .background(color = Color.Cyan)
+                    .background(color = MaterialTheme.colorScheme.primary)
             )
         }
         Text(
