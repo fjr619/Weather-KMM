@@ -23,6 +23,7 @@ data class TodayWeatherUiState(
     val condition: String = "",
     val conditionIconUrl: String = "",
     val hourlyForecasts: List<HourUi> = emptyList(),
+    val rainChance: String = "",
 )
 
 internal fun MutableStateFlow<TodayWeatherUiState>.setResponse(result: Forecast) {
@@ -45,7 +46,8 @@ internal fun MutableStateFlow<TodayWeatherUiState>.setResponse(result: Forecast)
                 .toString(),
             condition = result.currentWeather.weatherCondition.condition,
             conditionIconUrl = "https:${result.currentWeather.weatherCondition.iconUrl}",
-            hourlyForecasts = allDaysHours
+            hourlyForecasts = allDaysHours,
+            rainChance = result.forecastDays.first().day.chanceOfRain.toString(),
         )
     }
 }
@@ -85,7 +87,7 @@ fun getForecastHours(
         hours.addAll(it.hours)
     }
 
-    return hours.filter {hour ->
+    val filter = hours.filter {hour ->
         val isSameDay = isSameDay(
             currentTimeEpoch = currentTimeEpochSec,
             localTimeEpoch = hour.timeEpoch,
@@ -96,5 +98,15 @@ fun getForecastHours(
             currentTimeEpochSec,
             timeZoneId
         )
-    }.map { hour -> hour.toUi() }
+    }
+
+    return filter.map { hour ->
+        if (filter.first().time == hour.time) {
+            val a = hour.toUi()
+                .copy(hour = "Now")
+            a
+        } else {
+            hour.toUi()
+        }
+    }
 }
