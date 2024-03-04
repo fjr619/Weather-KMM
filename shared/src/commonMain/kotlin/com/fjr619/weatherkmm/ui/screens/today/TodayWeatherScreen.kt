@@ -13,7 +13,9 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import com.fjr619.weatherkmm.MR
 import com.fjr619.weatherkmm.ui.components.CurrentDateItem
+import com.fjr619.weatherkmm.ui.components.CurrentDetailsItem
 import com.fjr619.weatherkmm.ui.components.CurrentWeatherItem
+import com.fjr619.weatherkmm.ui.components.DividerItem
 import com.fjr619.weatherkmm.ui.components.HourlyWeatherItem
 import com.fjr619.weatherkmm.ui.components.PrecipitationChanceItem
 import com.fjr619.weatherkmm.ui.screens.main.MainEvent
@@ -87,6 +89,14 @@ fun TodayWeatherContent(
                     state.rainChance,
                 )
             )
+        }
+
+        item {
+            DividerItem()
+        }
+
+        item {
+            CurrentDetailsItem(state)
         }
     }
 }

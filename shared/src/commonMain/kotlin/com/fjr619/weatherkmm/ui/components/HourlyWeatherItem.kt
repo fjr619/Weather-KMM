@@ -25,7 +25,7 @@ fun HourlyWeatherItem(
     hourlyForecasts: List<HourUi>
 ) {
     LazyRow(
-        modifier = modifier.fillMaxWidth().padding(top = 64.dp),
+        modifier = modifier.fillMaxWidth().padding(top = 48.dp),
         horizontalArrangement = Arrangement.spacedBy(16.dp),
     ) {
         items(hourlyForecasts) { hour ->

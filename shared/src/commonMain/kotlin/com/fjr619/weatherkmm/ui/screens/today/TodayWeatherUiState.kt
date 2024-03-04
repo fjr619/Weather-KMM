@@ -24,6 +24,11 @@ data class TodayWeatherUiState(
     val conditionIconUrl: String = "",
     val hourlyForecasts: List<HourUi> = emptyList(),
     val rainChance: String = "",
+    val humidity: String = "",
+    val dewPoint: String = "",
+    val pressure: String = "",
+    val uvIndex: String = "",
+    val visibility: String = "",
 )
 
 internal fun MutableStateFlow<TodayWeatherUiState>.setResponse(result: Forecast) {
@@ -48,6 +53,12 @@ internal fun MutableStateFlow<TodayWeatherUiState>.setResponse(result: Forecast)
             conditionIconUrl = "https:${result.currentWeather.weatherCondition.iconUrl}",
             hourlyForecasts = allDaysHours,
             rainChance = result.forecastDays.first().day.chanceOfRain.toString(),
+            humidity = result.currentWeather.humidityPercentage.toInt().toString(),
+            dewPoint = allDaysHours.first().dewPoint,
+            pressure = result.currentWeather.pressureMillibars.toInt().toString(),
+            uvIndex = result.currentWeather.uvIndex.toInt()
+                .toString(), // TODO: Add moderate, high, low, etc.
+            visibility = result.currentWeather.visibilityKm.toInt().toString(),
         )
     }
 }
