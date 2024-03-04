@@ -1,12 +1,15 @@
 package com.fjr619.weatherkmm.ui.screens.today
 
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.capitalize
 import androidx.compose.ui.text.intl.Locale
+import com.fjr619.weatherkmm.MR
 import com.fjr619.weatherkmm.domain.model.Forecast
 import com.fjr619.weatherkmm.domain.model.ForecastDay
 import com.fjr619.weatherkmm.domain.model.Hour
 import com.fjr619.weatherkmm.ui.model.HourUi
 import com.fjr619.weatherkmm.ui.model.toUi
+import dev.icerock.moko.resources.StringResource
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.update
 import kotlinx.datetime.Instant
@@ -30,7 +33,32 @@ data class TodayWeatherUiState(
     val uvIndex: String = "",
     val visibility: String = "",
     val totalPrecipitation: String = "",
-)
+    val windSpeed: Int = 0,
+    val windDirectionDegrees: Int = 0,
+    val windDirection: StringResource? = null,
+) {
+    val windSpeedColor: Color
+        get() {
+            return getWindColor(windSpeed)
+        }
+
+    val windSpeedDescription: StringResource
+        get() {
+            return when (windSpeed) {
+                in 0..20 -> MR.strings.wind_speed_light
+                in 21..40 -> MR.strings.wind_speed_moderate
+                in 41..60 -> MR.strings.wind_speed_strong
+                else -> MR.strings.wind_speed_super_strong
+            }
+        }
+}
+
+internal fun getWindColor(speed: Int) = when (speed) {
+    in 0..20 -> Color.Cyan
+    in 21..40 -> Color.Green
+    in 41..60 -> Color.Yellow
+    else -> Color.Red
+}
 
 internal fun MutableStateFlow<TodayWeatherUiState>.setResponse(result: Forecast) {
     val allDaysHours = getForecastHours(
@@ -61,9 +89,25 @@ internal fun MutableStateFlow<TodayWeatherUiState>.setResponse(result: Forecast)
                 .toString(), // TODO: Add moderate, high, low, etc.
             visibility = result.currentWeather.visibilityKm.toInt().toString(),
             totalPrecipitation = result.forecastDays.first().day.totalPrecipitationMm.toString(),
+            windSpeed = allDaysHours.first().windSpeed,
+            windDirectionDegrees = allDaysHours.first().windDirectionDegrees,
+            windDirection = getWindDirection(allDaysHours.first().windDirection),
         )
     }
 }
+
+private fun getWindDirection(windDirection: String): StringResource =
+    when (windDirection.lowercase()) {
+        "n" -> MR.strings.wind_direction_north
+        "nne", "ne", "ene" -> MR.strings.wind_direction_northeast
+        "e" -> MR.strings.wind_direction_east
+        "ese", "se", "sse" -> MR.strings.wind_direction_southeast
+        "s" -> MR.strings.wind_direction_south
+        "ssw", "sw", "wsw" -> MR.strings.wind_direction_southwest
+        "w" -> MR.strings.wind_direction_west
+        "wnw", "nw", "nnw" -> MR.strings.wind_direction_northwest
+        else -> throw IllegalArgumentException("Invalid wind direction")
+    }
 
 fun parseTime(localTimeEpoch: Long, timeZoneId: String) =
     Instant.fromEpochSeconds(localTimeEpoch).toLocalDateTime(TimeZone.of(timeZoneId))
